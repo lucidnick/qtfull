@@ -1,5 +1,7 @@
-#test
-## C++ objects and libs
+hmisample
+Qt
+qt-everywhere-enterprise-src-5.8.0
+# C++ objects and libs
 
 *.slo
 *.lo
