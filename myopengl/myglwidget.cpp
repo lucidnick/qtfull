@@ -30,8 +30,19 @@ void MyGLWidget::resizeGL(int w, int h)                 //重置OpenGL窗口的�
     glViewport(0, 0, (GLint)w, (GLint)h);               //重置当前的视口  
     glMatrixMode(GL_PROJECTION);                        //选择投影矩阵  
     glLoadIdentity();                                   //重置投影矩阵  
-    //设置视口的大小  
-    //gluPerspective(45.0, (GLfloat)w/(GLfloat)h, 0.1, 100.0);  <---samchen marked out.....no glut
+    //设置视口的大小
+    //https://stackoverflow.com/questions/2417697/gluperspective-was-removed-in-opengl-3-1-any-replacements
+    // The following code is a fancy bit of math that is eqivilant to calling:
+    // gluPerspective( fieldOfView/2.0f, width/height , 0.1f, 255.0f )
+    // We do it this way simply to avoid requiring glu.h
+    GLfloat zNear = 0.1f;
+    GLfloat zFar = 100.0f;
+    GLfloat aspect = float(w)/float(h);
+    GLfloat fH = tan( float(45.0f / 360.0f * 3.14159f) ) * zNear;
+    GLfloat fW = fH * aspect;
+    glFrustum( -fW, fW, -fH, fH, zNear, zFar );
+
+    //gluPerspective(45.0, (GLfloat)w/(GLfloat)h, 0.1, 100.0);// <---samchen marked out.....no glut
     glMatrixMode(GL_MODELVIEW);                         //选择模型观察矩阵  
     glLoadIdentity();                                   //重置模型观察矩阵  
 }  
