@@ -4,8 +4,8 @@
 //                                                              by還是零分 
 //----------------------------------------------------------------------------- 
 
-
-#include <GL\glut.h> 
+//https://stackoverflow.com/questions/8892251/undefined-reference-to-symbol-glulookat
+#include <GL/freeglut.h>
 int old_rot_x=0;   //剛按下滑鼠時的視窗座標 
 int old_rot_y=0; 
 
@@ -21,8 +21,38 @@ void Mouse(int , int , int , int );         //獲取滑鼠按下和放開時的�
 void MotionMouse(int , int );            //獲取滑鼠按下期間的訊息 
 void Display(void);                     //描繪 
 
-int main() 
+int main(int argc, char** argv)
 { 
+    //from texture freeglut smooth_opengl3
+//    int menuA;
+//    glutInit(&argc, argv);
+//    glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+//    /* add command line argument "classic" for a pre-3.x context */
+//    if ((argc != 2) || (strcmp (argv[1], "classic") != 0)) {
+//       glutInitContextVersion (3, 1);
+//       glutInitContextFlags (GLUT_FORWARD_COMPATIBLE | GLUT_DEBUG);
+//    }
+//    glutInitWindowSize (500, 500);
+//    glutInitWindowPosition (100, 100);
+//    glutCreateWindow (argv[0]);
+//    dumpInfo ();
+//    init ();
+//    glutDisplayFunc(display);
+//    glutReshapeFunc(reshape);
+//    glutKeyboardFunc (keyboard);
+
+//    /* Add a menu. They have their own context and should thus work with forward compatible main windows too. */
+//    menuA = glutCreateMenu(samplemenu);
+//    glutAddMenuEntry("Sub menu A1 (01)",1);
+//    glutAddMenuEntry("Sub menu A2 (02)",2);
+//    glutAddMenuEntry("Sub menu A3 (03)",3);
+//    glutSetMenu(menuA);
+//    glutAttachMenu(GLUT_RIGHT_BUTTON);
+
+//    glutMainLoop();
+//    return 0;
+
+    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB); 
    glutInitWindowSize(400,400);         //視窗長寬 
    glutInitWindowPosition(600,80);         //視窗左上角的位置 
@@ -45,7 +75,7 @@ void Display(void)
    glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT); 
    glMatrixMode(GL_MODELVIEW); 
    glLoadIdentity(); 
-   gluLookAt(0,0,10.0f,0,0,0,0,1,0);   //視線的座標及方向 
+   gluLookAt(0,0,10.0f,0,0,0,0,1,0);   //視線的座標及方向
    glRotatef((float)rot_y+(float)record_y, 1.0, 0.0, 0.0);//以x軸當旋轉軸 
    glRotatef((float)rot_x+(float)record_x, 0.0, 1.0, 0.0);//以y軸當旋轉軸 
    glBegin(GL_TRIANGLES); 
@@ -66,12 +96,12 @@ void Display(void)
 
 void Keyboard(unsigned char key, int x, int y) 
 { 
-   printf("你所按按鍵的碼是%x\t此時視窗內的滑鼠座標是(%d,%d)\n", key, x, y); 
+   //printf("你所按按鍵的碼是%x\t此時視窗內的滑鼠座標是(%d,%d)\n", key, x, y);
 } 
 
 void WindowSize(int w, int h) 
 { 
-   printf("目前視窗大小為%dX%d\n",w,h); 
+   //printf("目前視窗大小為%dX%d\n",w,h);
    glViewport(0, 0, w, h);            //當視窗長寬改變時，畫面也跟著變 
    glMatrixMode(GL_PROJECTION); 
    glLoadIdentity(); 
